@@ -1,6 +1,6 @@
 {
     "name": "@misterhomer1992/wayforpay-api",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "type": "module",
     "main": "./dist/wayforpay.umd.cjs",
     "module": "./dist/wayforpay.js",
