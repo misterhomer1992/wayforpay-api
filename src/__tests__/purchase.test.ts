@@ -13,6 +13,10 @@ describe('test generatePurchaseUrl', () => {
         });
     });
 
+    afterEach(() => {
+        mockedAxios.post.mockClear();
+    });
+
     it('should generate payment url with single product', async () => {
         const date = 1715267902885;
         const response = await generatePurchaseUrl({

@@ -17,10 +17,13 @@ npm install @misterhomer1992/wayforpay-api
 
 Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
 
-1. **Import the Function**
+1. **Usage**
 
     ```javascript
-    import { generatePurchaseUrl } from '@misterhomer1992/wayforpay-api';
+    import {
+        generatePurchaseUrl,
+        generateRegularPurchaseUrl,
+    } from '@misterhomer1992/wayforpay-api';
     ```
 
 2. **Prepare Your Parameters**
@@ -52,6 +55,18 @@ Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
 
     ```javascript
     generatePurchaseUrl(purchaseParams)
+        .then((response) => {
+            console.log('Purchase URL:', response.url);
+        })
+        .catch((error) => {
+            console.error('Error generating purchase URL:', error);
+        });
+
+    generateRegularPurchaseUrl({
+        ...purchaseParams,
+        regularMode: 'daily',
+        regularCount: 5,
+    })
         .then((response) => {
             console.log('Purchase URL:', response.url);
         })

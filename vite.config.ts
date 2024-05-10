@@ -8,7 +8,12 @@ export default {
             fileName: 'wayforpay',
         },
         rollupOptions: {
-            external: ['axios', 'form-data'],
+            external: ['axios'],
+            output: {
+                globals: {
+                    axios: 'axios',
+                },
+            },
         },
     },
 };

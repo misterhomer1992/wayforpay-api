@@ -1,0 +1,213 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test generateRegularPurchaseUrl should generate regular payment url with dateEnd prop 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "https://secure.wayforpay.com/pay?behavior=offline",
+      FormData {
+        Symbol(state): [
+          {
+            "name": "merchantAccount",
+            "value": "my_account",
+          },
+          {
+            "name": "merchantDomainName",
+            "value": "https://my_account.com",
+          },
+          {
+            "name": "merchantTransactionSecureType",
+            "value": "AUTO",
+          },
+          {
+            "name": "merchantSignature",
+            "value": "c2b78f71992bd8f7279cb822756ae2c9",
+          },
+          {
+            "name": "orderReference",
+            "value": "product__1715267902885",
+          },
+          {
+            "name": "orderDate",
+            "value": "1715267902885",
+          },
+          {
+            "name": "currency",
+            "value": "UAH",
+          },
+          {
+            "name": "productName[0]",
+            "value": "Apple",
+          },
+          {
+            "name": "productPrice[0]",
+            "value": "100",
+          },
+          {
+            "name": "productCount[0]",
+            "value": "1",
+          },
+          {
+            "name": "language",
+            "value": "EN",
+          },
+          {
+            "name": "orderTimeout",
+            "value": "49000",
+          },
+          {
+            "name": "orderLifetime",
+            "value": "86400",
+          },
+          {
+            "name": "paymentSystems",
+            "value": "card;googlePay;applePay",
+          },
+          {
+            "name": "amount",
+            "value": "100",
+          },
+          {
+            "name": "regularBehavior",
+            "value": "preset",
+          },
+          {
+            "name": "regularMode",
+            "value": "daily",
+          },
+          {
+            "name": "regularAmount",
+            "value": "100",
+          },
+          {
+            "name": "regularOn",
+            "value": "1",
+          },
+          {
+            "name": "dateEnd",
+            "value": "24.12.2024",
+          },
+        ],
+      },
+      {
+        "headers": {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`test generateRegularPurchaseUrl should generate regular payment url with regularCount prop 1`] = `
+[MockFunction] {
+  "calls": [
+    [
+      "https://secure.wayforpay.com/pay?behavior=offline",
+      FormData {
+        Symbol(state): [
+          {
+            "name": "merchantAccount",
+            "value": "my_account",
+          },
+          {
+            "name": "merchantDomainName",
+            "value": "https://my_account.com",
+          },
+          {
+            "name": "merchantTransactionSecureType",
+            "value": "AUTO",
+          },
+          {
+            "name": "merchantSignature",
+            "value": "c2b78f71992bd8f7279cb822756ae2c9",
+          },
+          {
+            "name": "orderReference",
+            "value": "product__1715267902885",
+          },
+          {
+            "name": "orderDate",
+            "value": "1715267902885",
+          },
+          {
+            "name": "currency",
+            "value": "UAH",
+          },
+          {
+            "name": "productName[0]",
+            "value": "Apple",
+          },
+          {
+            "name": "productPrice[0]",
+            "value": "100",
+          },
+          {
+            "name": "productCount[0]",
+            "value": "1",
+          },
+          {
+            "name": "language",
+            "value": "EN",
+          },
+          {
+            "name": "orderTimeout",
+            "value": "49000",
+          },
+          {
+            "name": "orderLifetime",
+            "value": "86400",
+          },
+          {
+            "name": "paymentSystems",
+            "value": "card;googlePay;applePay",
+          },
+          {
+            "name": "amount",
+            "value": "100",
+          },
+          {
+            "name": "regularBehavior",
+            "value": "preset",
+          },
+          {
+            "name": "regularMode",
+            "value": "daily",
+          },
+          {
+            "name": "regularAmount",
+            "value": "100",
+          },
+          {
+            "name": "regularOn",
+            "value": "1",
+          },
+          {
+            "name": "regularCount",
+            "value": "1",
+          },
+        ],
+      },
+      {
+        "headers": {
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    ],
+  ],
+  "results": [
+    {
+      "type": "return",
+      "value": Promise {},
+    },
+  ],
+}
+`;
+
+exports[`test generateRegularPurchaseUrl should not generate regular payment url cause of wrong dateEnd format 1`] = `"Invalid date format. Use DD.MM.YYYY"`;
