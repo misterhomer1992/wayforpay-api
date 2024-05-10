@@ -40,6 +40,10 @@
     "peerDependencies": {
         "axios": "1.6.8"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/misterhomer1992/wayforpay-api.git"
+    },
     "engines": {
         "node": ">=20"
     }
