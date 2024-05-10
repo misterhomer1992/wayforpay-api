@@ -3,6 +3,31 @@ const crypto = require('crypto');
 import { DELIMITER } from './const';
 import { CommonFormDataProps } from './types';
 
+function isValidDate(date: string): boolean {
+    // First, check the basic format 'dd.mm.yyyy'
+    const regex = /^\d{2}\.\d{2}\.\d{4}$/;
+    if (!regex.test(date)) {
+        return false;
+    }
+
+    // Split the date string into parts
+    const parts = date.split('.');
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+
+    // Check if day is within the month's maximum days
+    // Note: This does not fully account for leap years or specific month's day count,
+    // but checks the general case for month and day validity.
+    if (day < 1 || day > 31) {
+        return false;
+    }
+    if (month < 1 || month > 12) {
+        return false;
+    }
+
+    return true;
+}
+
 function formatProductCount({
     productName,
     productCount,
@@ -131,4 +156,5 @@ export {
     formatProductsAmount,
     getSignature,
     fillCommonFormDataProps,
+    isValidDate,
 };

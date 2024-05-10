@@ -1,47 +1,25 @@
 import axios from 'axios';
-import { fillCommonFormDataProps } from './utils';
-import { RegularPurchaseProps } from './types';
+import { fillCommonFormDataProps, isValidDate } from './utils';
+import { CommonFormDataProps } from './types';
 
-function isValidCustomDate(date: string): boolean {
-    // First, check the basic format 'dd.mm.yyyy'
-    const regex = /^\d{2}\.\d{2}\.\d{4}$/;
-    if (!regex.test(date)) {
-        return false;
-    }
+type CommonRegularPurchaseProps = CommonFormDataProps & {
+    regularMode:
+        | 'client'
+        | 'daily'
+        | 'weekly'
+        | 'quarterly'
+        | 'monthly'
+        | 'halfyearly'
+        | 'yearly';
+};
 
-    // Split the date string into parts
-    const parts = date.split('.');
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
-
-    // Check if day is within the month's maximum days
-    // Note: This does not fully account for leap years or specific month's day count,
-    // but checks the general case for month and day validity.
-    if (day < 1 || day > 31) {
-        return false;
-    }
-    if (month < 1 || month > 12) {
-        return false;
-    }
-
-    // Basic check for leap year and February 29th
-    if (month === 2 && day === 29) {
-        const isLeapYear =
-            (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
-        if (!isLeapYear) {
-            return false;
-        }
-    }
-    // Checking other months for appropriate day numbers
-    else if (month === 4 || month === 6 || month === 9 || month === 11) {
-        if (day > 30) {
-            return false;
-        }
-    }
-
-    return true;
-}
+type RegularPurchaseProps =
+    | (CommonRegularPurchaseProps & {
+          regularCount: number;
+      })
+    | (CommonRegularPurchaseProps & {
+          dateEnd: string;
+      });
 
 function generateRegularPurchaseUrl({ ...commonProps }: RegularPurchaseProps) {
     const form = new FormData();
@@ -56,7 +34,7 @@ function generateRegularPurchaseUrl({ ...commonProps }: RegularPurchaseProps) {
     form.append('regularOn', '1');
 
     if ('dateEnd' in commonProps) {
-        if (!isValidCustomDate(commonProps.dateEnd)) {
+        if (!isValidDate(commonProps.dateEnd)) {
             throw new Error('Invalid date format. Use DD.MM.YYYY');
         }
 
@@ -74,4 +52,96 @@ function generateRegularPurchaseUrl({ ...commonProps }: RegularPurchaseProps) {
     });
 }
 
-export { generateRegularPurchaseUrl };
+type RetrieveRegularPurchaseStateResponse =
+    | {
+          reasonCode: number;
+          reason: string;
+          orderReference: string;
+          mode: string;
+          status: string;
+          amount: number;
+          currency: string;
+          card: string;
+          email: string;
+          dateBegin: number;
+          dateEnd: number;
+          lastPayedDate: null | string;
+          lastPayedStatus: null | string;
+          nextPaymentDate: number;
+      }
+    | {
+          reasonCode: number;
+          reason: string;
+          orderReference: null;
+          mode: null;
+          status: null;
+          amount: number;
+          currency: null;
+          card: string;
+          email: null;
+          dateBegin: null;
+          dateEnd: null;
+          lastPayedDate: null;
+          lastPayedStatus: null;
+          nextPaymentDate: null;
+      };
+
+function retrieveRegularPurchaseState<
+    MAccount extends string,
+    OReference extends string,
+>({
+    merchantAccount,
+    orderReference,
+    merchantPassword,
+}: {
+    merchantAccount: MAccount;
+    orderReference: OReference;
+    merchantPassword: string;
+}) {
+    const data = {
+        requestType: 'STATUS',
+        merchantAccount,
+        merchantPassword,
+        orderReference,
+    };
+
+    return axios.post<RetrieveRegularPurchaseStateResponse>(
+        'https://api.wayforpay.com/regularApi',
+        data,
+    );
+}
+
+type CancelRegularPurchaseResponse =
+    | { reasonCode: 4102; reason: 'Rule is not found' }
+    | { reasonCode: 4100; reason: 'Ok' };
+
+function cancelRegularPurchase<
+    MAccount extends string,
+    OReference extends string,
+>({
+    merchantAccount,
+    orderReference,
+    merchantPassword,
+}: {
+    merchantAccount: MAccount;
+    orderReference: OReference;
+    merchantPassword: string;
+}) {
+    const data = {
+        requestType: 'REMOVE',
+        merchantAccount,
+        merchantPassword,
+        orderReference: orderReference,
+    };
+
+    return axios.post<CancelRegularPurchaseResponse>(
+        'https://api.wayforpay.com/regularApi',
+        data,
+    );
+}
+
+export {
+    generateRegularPurchaseUrl,
+    retrieveRegularPurchaseState,
+    cancelRegularPurchase,
+};

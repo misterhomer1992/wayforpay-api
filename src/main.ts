@@ -1,2 +1,10 @@
-export { generatePurchaseUrl } from './purchase';
-export { generateRegularPurchaseUrl } from './regularPurchase';
+export {
+    generatePurchaseUrl,
+    retrievePurchaseState,
+    refundPurchase,
+} from './purchase';
+export {
+    generateRegularPurchaseUrl,
+    retrieveRegularPurchaseState,
+    cancelRegularPurchase,
+} from './regularPurchase';

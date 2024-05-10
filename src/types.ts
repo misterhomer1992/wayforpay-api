@@ -1,3 +1,5 @@
+type Currency = 'UAH' | 'USD' | 'EUR';
+
 type CommonFormDataProps = {
     merchantAccount: string;
     merchantSecretKey: string;
@@ -6,7 +8,7 @@ type CommonFormDataProps = {
     orderDate: number;
     productName: string[];
     productPrice: number[];
-    currency?: 'UAH' | 'USD' | 'EUR';
+    currency?: Currency;
     productCount?: number[];
     amount?: number;
     orderTimeout?: number;
@@ -27,23 +29,4 @@ type CommonFormDataProps = {
         | 'RU';
 };
 
-type CommonRegularPurchaseProps = CommonFormDataProps & {
-    regularMode:
-        | 'client'
-        | 'daily'
-        | 'weekly'
-        | 'quarterly'
-        | 'monthly'
-        | 'halfyearly'
-        | 'yearly';
-};
-
-type RegularPurchaseProps =
-    | (CommonRegularPurchaseProps & {
-          regularCount: number;
-      })
-    | (CommonRegularPurchaseProps & {
-          dateEnd: string;
-      });
-
-export { type CommonFormDataProps, type RegularPurchaseProps };
+export { type CommonFormDataProps, type Currency };
