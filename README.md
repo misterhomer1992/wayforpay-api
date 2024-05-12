@@ -23,19 +23,15 @@ Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
 
 1.  **Usage**
 
-        ```javascript
-
+    ```javascript
     import {
-    generatePurchaseUrl,
-    retrievePurchaseState,
-    refundPurchase,
-    generateRegularPurchaseUrl,
-    retrieveRegularPurchaseState,
-    cancelRegularPurchase,
+        generatePurchaseUrl,
+        retrievePurchaseState,
+        refundPurchase,
+        generateRegularPurchaseUrl,
+        retrieveRegularPurchaseState,
+        cancelRegularPurchase,
     } from '@misterhomer1992/wayforpay-api';
-
-    ```
-
     ```
 
 2.  **Prepare Your Parameters**
