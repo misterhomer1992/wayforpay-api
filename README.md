@@ -1,32 +1,44 @@
-````
 # WayFoPay Payment Service
 
-Welcome to the WayFoPay Payment Service repository. This project is dedicated to providing an easy-to-integrate payment solution through our API, making it simpler for merchants to initiate transactions and securely process payments. Currently, we offer a single public API function `generatePurchaseUrl`, to create a URL for processing a purchase.
+Welcome to the WayFoPay Payment Service repository. This project is dedicated to providing an easy-to-integrate payment solution through our API, making it simpler for merchants to initiate transactions and securely process payments.
 
 ## Features
 
-- **Generate Purchase URL**: Generate a secure link for processing payments with customizable parameters to fit various transaction requirements.
+-   **Generate Purchase URL**: Generate a secure link for processing payments with customizable parameters to fit various transaction requirements.
+-   **Retrieve Purchase State**: Retrieve the state of a purchase using the merchant account and order reference.
+-   **Refund Purchase**: Refund a purchase using the merchant account, order reference, amount, and currency.
+-   **Generate Regular Purchase URL**: Generate a secure link for processing regular payments with customizable parameters.
+-   **Retrieve Regular Purchase State**: Retrieve the state of a regular purchase using the merchant account and order reference.
+-   **Cancel Regular Purchase**: Cancel a regular purchase using the merchant account and order reference.
 
 ## Installation
 
 ```sh
 npm install @misterhomer1992/wayforpay-api
-````
+```
 
 ## Usage
 
 Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
 
-1. **Usage**
+1.  **Usage**
 
-    ```javascript
+        ```javascript
+
     import {
-        generatePurchaseUrl,
-        generateRegularPurchaseUrl,
+    generatePurchaseUrl,
+    retrievePurchaseState,
+    refundPurchase,
+    generateRegularPurchaseUrl,
+    retrieveRegularPurchaseState,
+    cancelRegularPurchase,
     } from '@misterhomer1992/wayforpay-api';
+
     ```
 
-2. **Prepare Your Parameters**
+    ```
+
+2.  **Prepare Your Parameters**
 
     You'll need to prepare several parameters to pass to the `generatePurchaseUrl` function. These parameters include merchant details, order information, product details, and optional configurations.
 
@@ -49,9 +61,9 @@ Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
     };
     ```
 
-3. **Generate the Purchase URL**
+3.  **Use the Functions**
 
-    With your parameters prepared, you can now call `generatePurchaseUrl` and handle the response to get the payment URL.
+    With your parameters prepared, you can now call the functions and handle the responses.
 
     ```javascript
     generatePurchaseUrl(purchaseParams)
@@ -62,16 +74,66 @@ Below is a step-by-step guide on how to use the `generatePurchaseUrl` function:
             console.error('Error generating purchase URL:', error);
         });
 
+    retrievePurchaseState({
+        merchantAccount: 'yourMerchantAccountID',
+        orderReference: 'yourUniqueOrderRef',
+        merchantSecretKey: 'yourMerchantSecretKey',
+    })
+        .then((response) => {
+            console.log('Purchase State:', response.data);
+        })
+        .catch((error) => {
+            console.error('Error retrieving purchase state:', error);
+        });
+
+    refundPurchase({
+        merchantAccount: 'yourMerchantAccountID',
+        orderReference: 'yourUniqueOrderRef',
+        merchantSecretKey: 'yourMerchantSecretKey',
+        amount: 300.0,
+        currency: 'USD',
+    })
+        .then((response) => {
+            console.log('Refund Response:', response.data);
+        })
+        .catch((error) => {
+            console.error('Error refunding purchase:', error);
+        });
+
     generateRegularPurchaseUrl({
         ...purchaseParams,
         regularMode: 'daily',
         regularCount: 5,
     })
         .then((response) => {
-            console.log('Purchase URL:', response.url);
+            console.log('Regular Purchase URL:', response.url);
         })
         .catch((error) => {
-            console.error('Error generating purchase URL:', error);
+            console.error('Error generating regular purchase URL:', error);
+        });
+
+    retrieveRegularPurchaseState({
+        merchantAccount: 'yourMerchantAccountID',
+        orderReference: 'yourUniqueOrderRef',
+        merchantPassword: 'yourMerchantPassword',
+    })
+        .then((response) => {
+            console.log('Regular Purchase State:', response.data);
+        })
+        .catch((error) => {
+            console.error('Error retrieving regular purchase state:', error);
+        });
+
+    cancelRegularPurchase({
+        merchantAccount: 'yourMerchantAccountID',
+        orderReference: 'yourUniqueOrderRef',
+        merchantPassword: 'yourMerchantPassword',
+    })
+        .then((response) => {
+            console.log('Cancel Regular Purchase Response:', response.data);
+        })
+        .catch((error) => {
+            console.error('Error cancelling regular purchase:', error);
         });
     ```
 

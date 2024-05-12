@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { fillCommonFormDataProps, getSignature } from './utils';
-import { CommonFormDataProps, Currency } from './types';
+import {
+    CommonFormDataProps,
+    Currency,
+    ResponseReasonCode,
+    ResponseTransactionStatus,
+} from './types';
 
 type GeneratePurchaseResponse = {
     url: string;
@@ -25,7 +30,7 @@ function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
 type RetrievePurchaseStateResponse<MAccount, OReference> = {
     merchantAccount: MAccount;
     reason: string;
-    reasonCode: number;
+    reasonCode: ResponseReasonCode;
     orderReference: OReference;
     amount: number;
     currency: Currency;
@@ -36,7 +41,7 @@ type RetrievePurchaseStateResponse<MAccount, OReference> = {
     cardType: string;
     issuerBankCountry: string;
     issuerBankName: string;
-    transactionStatus: string;
+    transactionStatus: ResponseTransactionStatus;
     refundAmount: number;
     settlementDate: string;
     settlementAmount: number;
@@ -79,14 +84,11 @@ type RefundPurchaseResponse<
     MAccount extends string,
     OReference extends string,
 > = {
-    merchantAccount: MAccount;
     orderReference: OReference;
-    transactionStatus: 'Refunded' | 'Voided' | 'Declined';
+    transactionStatus: ResponseTransactionStatus;
+    reasonCode: ResponseReasonCode;
     reason: string;
-    reasonCode: number;
-    baseAmount: number;
-    baseCurrency: Currency;
-    merchantSignature: string;
+    merchantAccount: MAccount;
 };
 
 function refundPurchase<MAccount extends string, OReference extends string>({

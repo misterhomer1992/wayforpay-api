@@ -2,6 +2,14 @@ import axios from 'axios';
 import { fillCommonFormDataProps, isValidDate } from './utils';
 import { CommonFormDataProps } from './types';
 
+type RegularPurchaseStatus =
+    | 'Active'
+    | 'Suspended'
+    | 'Created'
+    | 'Removed'
+    | 'Confirmed'
+    | 'Completed';
+
 type CommonRegularPurchaseProps = CommonFormDataProps & {
     regularMode:
         | 'client'
@@ -58,7 +66,7 @@ type RetrieveRegularPurchaseStateResponse =
           reason: string;
           orderReference: string;
           mode: string;
-          status: string;
+          status: RegularPurchaseStatus;
           amount: number;
           currency: string;
           card: string;
