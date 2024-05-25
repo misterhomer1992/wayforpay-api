@@ -96,6 +96,7 @@ function fillCommonFormDataProps(
         orderLifeTime = 86400,
         serviceUrl,
         language = 'EN',
+        returnUrl,
     }: CommonFormDataProps,
 ) {
     const productCount = formatProductCount({
@@ -148,6 +149,10 @@ function fillCommonFormDataProps(
 
     if (serviceUrl) {
         form.append('serviceUrl', serviceUrl);
+    }
+
+    if (returnUrl) {
+        form.append('returnUrl', returnUrl);
     }
 }
 

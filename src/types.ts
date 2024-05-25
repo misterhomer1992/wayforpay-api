@@ -81,6 +81,7 @@ type CommonFormDataProps = {
     orderLifeTime?: number;
     serviceUrl?: string;
     language?: Language;
+    returnUrl?: string;
 };
 
 type ResponseTransactionStatus =
