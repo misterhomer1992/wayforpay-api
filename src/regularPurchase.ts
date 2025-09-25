@@ -64,8 +64,11 @@ async function generateRegularPurchaseUrl({
     });
 
     return {
-        url: res.data.url,
-        merchantSignature,
+        ...res,
+        data: {
+            ...res.data,
+            merchantSignature,
+        },
     };
 }
 

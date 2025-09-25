@@ -29,8 +29,11 @@ async function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
     );
 
     return {
-        url: res.data.url,
-        merchantSignature,
+        ...res,
+        data: {
+            ...res.data,
+            merchantSignature,
+        },
     };
 }
 
