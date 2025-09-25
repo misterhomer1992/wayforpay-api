@@ -154,6 +154,10 @@ function fillCommonFormDataProps(
     if (returnUrl) {
         form.append('returnUrl', returnUrl);
     }
+
+    return {
+        merchantSignature: merchantSignature as string,
+    };
 }
 
 export {

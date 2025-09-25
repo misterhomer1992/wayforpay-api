@@ -29,10 +29,14 @@ type RegularPurchaseProps =
           dateEnd: string;
       });
 
-function generateRegularPurchaseUrl({ ...commonProps }: RegularPurchaseProps) {
+async function generateRegularPurchaseUrl({
+    ...commonProps
+}: RegularPurchaseProps) {
     const form = new FormData();
 
-    fillCommonFormDataProps(form, { ...commonProps });
+    const { merchantSignature } = fillCommonFormDataProps(form, {
+        ...commonProps,
+    });
 
     const amount = form.get('amount')!;
 
@@ -51,13 +55,18 @@ function generateRegularPurchaseUrl({ ...commonProps }: RegularPurchaseProps) {
         form.append('regularCount', String(commonProps.regularCount));
     }
 
-    return axios.post<{
+    const res = await axios.post<{
         url: string;
     }>('https://secure.wayforpay.com/pay?behavior=offline', form, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },
     });
+
+    return {
+        url: res.data.url,
+        merchantSignature,
+    };
 }
 
 type RetrieveRegularPurchaseStateResponse =

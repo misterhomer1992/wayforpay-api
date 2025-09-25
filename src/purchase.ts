@@ -11,12 +11,14 @@ type GeneratePurchaseResponse = {
     url: string;
 };
 
-function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
+async function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
     const form = new FormData();
 
-    fillCommonFormDataProps(form, { ...commonProps });
+    const { merchantSignature } = fillCommonFormDataProps(form, {
+        ...commonProps,
+    });
 
-    return axios.post<GeneratePurchaseResponse>(
+    const res = await axios.post<GeneratePurchaseResponse>(
         'https://secure.wayforpay.com/pay?behavior=offline',
         form,
         {
@@ -25,6 +27,11 @@ function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
             },
         },
     );
+
+    return {
+        url: res.data.url,
+        merchantSignature,
+    };
 }
 
 type RetrievePurchaseStateResponse<MAccount, OReference> = {
