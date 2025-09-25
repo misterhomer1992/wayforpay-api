@@ -33,7 +33,7 @@ describe('test generateRegularPurchaseUrl', () => {
         });
 
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=regular-some-fake-url-123',
         );
     });
@@ -54,7 +54,7 @@ describe('test generateRegularPurchaseUrl', () => {
         });
 
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=regular-some-fake-url-123',
         );
     });

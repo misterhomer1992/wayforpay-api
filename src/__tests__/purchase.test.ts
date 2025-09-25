@@ -31,7 +31,7 @@ describe('test generatePurchaseUrl', () => {
         });
 
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -49,7 +49,7 @@ describe('test generatePurchaseUrl', () => {
             currency: 'UAH',
         });
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -69,7 +69,7 @@ describe('test generatePurchaseUrl', () => {
         });
 
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -87,7 +87,7 @@ describe('test generatePurchaseUrl', () => {
             currency: 'EUR',
         });
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -106,7 +106,7 @@ describe('test generatePurchaseUrl', () => {
             serviceUrl: 'https://my_account.com/success',
         });
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -126,7 +126,7 @@ describe('test generatePurchaseUrl', () => {
             language: 'UA',
         });
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
@@ -144,7 +144,7 @@ describe('test generatePurchaseUrl', () => {
             productCount: [3],
         });
         expect(mockedAxios.post).toMatchSnapshot();
-        expect(response.data.url).toBe(
+        expect(response.url).toBe(
             'https://secure.wayforpay.com/page?vkh=some-fake-url-123',
         );
     });
