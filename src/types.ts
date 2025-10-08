@@ -82,6 +82,7 @@ type CommonFormDataProps = {
     serviceUrl?: string;
     language?: Language;
     returnUrl?: string;
+    dateNext?: string;
 };
 
 type ResponseTransactionStatus =

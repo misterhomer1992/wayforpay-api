@@ -97,6 +97,7 @@ function fillCommonFormDataProps(
         serviceUrl,
         language = 'EN',
         returnUrl,
+        dateNext,
     }: CommonFormDataProps,
 ) {
     const productCount = formatProductCount({
@@ -153,6 +154,10 @@ function fillCommonFormDataProps(
 
     if (returnUrl) {
         form.append('returnUrl', returnUrl);
+    }
+
+    if (dateNext) {
+        form.append('dateNext', dateNext);
     }
 
     return {
