@@ -1,5 +1,5 @@
 jest.mock('axios');
-import { generatePurchaseUrl } from '../main';
+import { generatePurchaseUrl } from '..';
 import axios from 'axios';
 
 const mockedAxios = jest.mocked(axios);

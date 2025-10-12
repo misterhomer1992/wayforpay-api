@@ -8,3 +8,5 @@ export {
     retrieveRegularPurchaseState,
     cancelRegularPurchase,
 } from './regularPurchase';
+
+export * from './types';
