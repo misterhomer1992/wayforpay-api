@@ -1,5 +1,5 @@
 jest.mock('axios');
-import { generateRegularPurchaseUrl } from '..';
+import { generateRegularPurchase } from '..';
 import axios from 'axios';
 
 const mockedAxios = jest.mocked(axios);
@@ -19,7 +19,7 @@ describe('test generateRegularPurchaseUrl', () => {
 
     it('should generate regular payment url with regularCount prop', async () => {
         const date = 1715267902885;
-        const response = await generateRegularPurchaseUrl({
+        const response = await generateRegularPurchase({
             merchantAccount: 'my_account',
             merchantDomainName: 'https://my_account.com',
             merchantSecretKey: '12jk3hkj12h3kj1h3kj1h3kj123kh12',
@@ -40,7 +40,7 @@ describe('test generateRegularPurchaseUrl', () => {
 
     it('should generate regular payment url with dateEnd prop', async () => {
         const date = 1715267902885;
-        const response = await generateRegularPurchaseUrl({
+        const response = await generateRegularPurchase({
             merchantAccount: 'my_account',
             merchantDomainName: 'https://my_account.com',
             merchantSecretKey: '12jk3hkj12h3kj1h3kj1h3kj123kh12',
@@ -62,7 +62,7 @@ describe('test generateRegularPurchaseUrl', () => {
     it('should not generate regular payment url cause of wrong dateEnd format', async () => {
         const date = 1715267902885;
         function testFn() {
-            generateRegularPurchaseUrl({
+            generateRegularPurchase({
                 merchantAccount: 'my_account',
                 merchantDomainName: 'https://my_account.com',
                 merchantSecretKey: '12jk3hkj12h3kj1h3kj1h3kj123kh12',

@@ -29,7 +29,7 @@ type RegularPurchaseProps =
           dateEnd: string;
       });
 
-async function generateRegularPurchaseUrl({
+async function generateRegularPurchase({
     ...commonProps
 }: RegularPurchaseProps) {
     const form = new FormData();
@@ -66,7 +66,6 @@ async function generateRegularPurchaseUrl({
     return {
         url: res.data.url,
         merchantSignature,
-        merchantVersion: '1.0',
     };
 }
 
@@ -104,7 +103,7 @@ type RetrieveRegularPurchaseStateResponse =
           nextPaymentDate: null;
       };
 
-function retrieveRegularPurchaseState<
+async function retrieveRegularPurchaseState<
     MAccount extends string,
     OReference extends string,
 >({
@@ -123,10 +122,12 @@ function retrieveRegularPurchaseState<
         orderReference,
     };
 
-    return axios.post<RetrieveRegularPurchaseStateResponse>(
+    const response = await axios.post<RetrieveRegularPurchaseStateResponse>(
         'https://api.wayforpay.com/regularApi',
         data,
     );
+
+    return response.data;
 }
 
 type CancelRegularPurchaseResponse =
@@ -156,7 +157,7 @@ type EditRegularPurchaseResponse =
     | { reasonCode: 4102; reason: 'Rule is not found' }
     | { reasonCode: number; reason: string };
 
-function editRegularPurchaseUrl({
+async function editRegularPurchase({
     merchantAccount,
     merchantPassword,
     regularMode,
@@ -187,13 +188,15 @@ function editRegularPurchaseUrl({
         orderReference,
     };
 
-    return axios.post<EditRegularPurchaseResponse>(
+    const response = await axios.post<EditRegularPurchaseResponse>(
         'https://api.wayforpay.com/regularApi',
         data,
     );
+
+    return response.data;
 }
 
-function cancelRegularPurchase<
+async function cancelRegularPurchase<
     MAccount extends string,
     OReference extends string,
 >({
@@ -212,15 +215,17 @@ function cancelRegularPurchase<
         orderReference: orderReference,
     };
 
-    return axios.post<CancelRegularPurchaseResponse>(
+    const response = await axios.post<CancelRegularPurchaseResponse>(
         'https://api.wayforpay.com/regularApi',
         data,
     );
+
+    return response.data;
 }
 
 export {
-    generateRegularPurchaseUrl,
+    generateRegularPurchase,
     retrieveRegularPurchaseState,
     cancelRegularPurchase,
-    editRegularPurchaseUrl,
+    editRegularPurchase,
 };

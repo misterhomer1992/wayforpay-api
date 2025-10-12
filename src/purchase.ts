@@ -11,7 +11,7 @@ type GeneratePurchaseResponse = {
     url: string;
 };
 
-async function generatePurchaseUrl({ ...commonProps }: CommonFormDataProps) {
+async function generatePurchase({ ...commonProps }: CommonFormDataProps) {
     const form = new FormData();
 
     const { merchantSignature } = fillCommonFormDataProps(form, {
@@ -57,7 +57,7 @@ type RetrievePurchaseStateResponse<MAccount, OReference> = {
     merchantSignature: string;
 };
 
-function retrievePurchaseState<
+async function retrievePurchaseState<
     MAccount extends string,
     OReference extends string,
 >({
@@ -82,10 +82,11 @@ function retrievePurchaseState<
         apiVersion: 1,
     };
 
-    return axios.post<RetrievePurchaseStateResponse<MAccount, OReference>>(
-        'https://api.wayforpay.com/api',
-        data,
-    );
+    const response = await axios.post<
+        RetrievePurchaseStateResponse<MAccount, OReference>
+    >('https://api.wayforpay.com/api', data);
+
+    return response.data;
 }
 
 type RefundPurchaseResponse<
@@ -99,7 +100,10 @@ type RefundPurchaseResponse<
     merchantAccount: MAccount;
 };
 
-function refundPurchase<MAccount extends string, OReference extends string>({
+async function refundPurchase<
+    MAccount extends string,
+    OReference extends string,
+>({
     merchantAccount,
     orderReference,
     merchantSecretKey,
@@ -128,10 +132,11 @@ function refundPurchase<MAccount extends string, OReference extends string>({
         apiVersion: 1,
     };
 
-    return axios.post<RefundPurchaseResponse<MAccount, OReference>>(
-        'https://api.wayforpay.com/api',
-        data,
-    );
+    const response = await axios.post<
+        RefundPurchaseResponse<MAccount, OReference>
+    >('https://api.wayforpay.com/api', data);
+
+    return response.data;
 }
 
-export { generatePurchaseUrl, retrievePurchaseState, refundPurchase };
+export { generatePurchase, retrievePurchaseState, refundPurchase };

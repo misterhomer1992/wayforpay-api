@@ -1,13 +1,13 @@
 export {
-    generatePurchaseUrl,
+    generatePurchase,
     retrievePurchaseState,
     refundPurchase,
 } from './purchase';
 export {
-    generateRegularPurchaseUrl,
+    generateRegularPurchase,
     retrieveRegularPurchaseState,
     cancelRegularPurchase,
-    editRegularPurchaseUrl,
+    editRegularPurchase,
 } from './regularPurchase';
 
 export * from './types';
