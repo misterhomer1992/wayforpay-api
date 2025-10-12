@@ -133,6 +133,66 @@ type CancelRegularPurchaseResponse =
     | { reasonCode: 4102; reason: 'Rule is not found' }
     | { reasonCode: 4100; reason: 'Ok' };
 
+type EditRegularPurchaseProps = {
+    merchantAccount: string;
+    merchantPassword: string;
+    regularMode:
+        | 'once'
+        | 'daily'
+        | 'weekly'
+        | 'quarterly'
+        | 'monthly'
+        | 'halfyearly'
+        | 'yearly';
+    amount: number;
+    currency: string;
+    dateBegin: string;
+    dateEnd: string;
+    orderReference: string;
+};
+
+type EditRegularPurchaseResponse =
+    | { reasonCode: 4100; reason: 'Ok' }
+    | { reasonCode: 4102; reason: 'Rule is not found' }
+    | { reasonCode: number; reason: string };
+
+function editRegularPurchaseUrl({
+    merchantAccount,
+    merchantPassword,
+    regularMode,
+    amount,
+    currency,
+    dateBegin,
+    dateEnd,
+    orderReference,
+}: EditRegularPurchaseProps) {
+    // Validate date formats
+    if (!isValidDate(dateBegin)) {
+        throw new Error('Invalid dateBegin format. Use DD.MM.YYYY');
+    }
+
+    if (!isValidDate(dateEnd)) {
+        throw new Error('Invalid dateEnd format. Use DD.MM.YYYY');
+    }
+
+    const data = {
+        requestType: 'CHANGE',
+        merchantAccount,
+        merchantPassword,
+        regularMode,
+        amount,
+        currency,
+        dateBegin,
+        dateEnd,
+        orderReference,
+    };
+
+    return axios.post<EditRegularPurchaseResponse>(
+        'https://api.wayforpay.com/regularApi',
+        data,
+    );
+}
+
 function cancelRegularPurchase<
     MAccount extends string,
     OReference extends string,
@@ -162,4 +222,5 @@ export {
     generateRegularPurchaseUrl,
     retrieveRegularPurchaseState,
     cancelRegularPurchase,
+    editRegularPurchaseUrl,
 };

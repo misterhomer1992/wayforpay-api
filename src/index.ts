@@ -7,6 +7,7 @@ export {
     generateRegularPurchaseUrl,
     retrieveRegularPurchaseState,
     cancelRegularPurchase,
+    editRegularPurchaseUrl,
 } from './regularPurchase';
 
 export * from './types';
